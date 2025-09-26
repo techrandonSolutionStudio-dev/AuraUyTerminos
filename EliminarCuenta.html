@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Eliminación de Cuenta - Aurauy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	<script type="text/javascript">document.oncontextmenu = function(){return false;}</script>
+    <style>
+        /* Use Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-700">
+
+    <!-- Main Content Container -->
+    <main class="container mx-auto max-w-2xl py-12 px-6 md:py-20">
+        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
+            
+            <!-- Header Section -->
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Eliminación de Cuenta y Datos</h1>
+                <p class="text-gray-500 mt-4">Para solicitar la eliminación permanente de tu cuenta y todos los datos asociados, por favor ingresá el correo electrónico que utilizaste para registrarte.</p>
+            </header>
+
+            <!-- Form Section -->
+            <section aria-labelledby="form-titulo">
+                <!-- The form now points to the FormSubmit service -->
+                <form id="deleteRequestForm" action="https://formsubmit.co/aurauytrss@gmail.com" method="POST" class="space-y-6">
+                    <!-- Hidden fields for FormSubmit configuration -->
+                    <input type="hidden" name="_subject" value="Nueva Solicitud de Eliminación de Cuenta - Aurauy">
+                    <input type="hidden" name="_captcha" value="false"> <!-- Disables captcha for now -->
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="tu.correo@ejemplo.com">
+                    </div>
+                    <div>
+                        <button type="submit" id="submitButton" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                            Enviar Solicitud
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Confirmation Message (Initially Hidden) -->
+                <div id="confirmationMessage" class="hidden text-center bg-green-50 border border-green-200 text-green-800 p-6 rounded-lg mt-8">
+                    <h2 class="text-xl font-semibold mb-2">¡Solicitud Recibida!</h2>
+                    <p>Gracias por contactarnos. Hemos recibido tu petición para eliminar tu cuenta.</p>
+                    <p class="mt-2">En un plazo máximo de 5 días hábiles, nos pondremos en contacto contigo a través de este correo electrónico para confirmar que la eliminación se ha completado. No necesitás hacer nada más.</p>
+                </div>
+                 <!-- Error Message (Initially Hidden) -->
+                <div id="errorMessage" class="hidden text-center bg-red-50 border border-red-200 text-red-800 p-6 rounded-lg mt-8">
+                    <h2 class="text-xl font-semibold mb-2">Ocurrió un error</h2>
+                    <p>No se pudo enviar tu solicitud. Por favor, intentá de nuevo más tarde o contactanos directamente a nuestro correo de soporte.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="text-center py-8 px-6">
+        <p class="text-gray-500 mt-2">
+            <a href="privacy_policy.html" class="text-indigo-600 hover:underline">Volver a la Política de Privacidad</a>
+        </p>
+        <p class="text-sm text-gray-400 mt-6">&copy; 2025 Aurauy - Tech Random Solutions Studio. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // JavaScript to handle form submission via AJAX and show confirmation
+        const form = document.getElementById('deleteRequestForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form);
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    form.classList.add('hidden');
+                    confirmationMessage.classList.remove('hidden');
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                form.classList.add('hidden');
+                errorMessage.classList.remove('hidden');
+            })
+            .finally(() => {
+                // Re-enable button in case of error for retry, though form is hidden
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar Solicitud';
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+   
