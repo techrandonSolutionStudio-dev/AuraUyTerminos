@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraUy — Estado del Proyecto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: #f9fafb; /* gray-50 */
+            border-left-width: 5px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        .card h3 {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .card p {
+            color: #4b5563; /* gray-600 */
+        }
+        .card ul {
+            list-style-position: inside;
+            margin-top: 1rem;
+            color: #374151; /* gray-700 */
+        }
+        .card li {
+            margin-bottom: 0.25rem;
+        }
+        h1, h2 {
+            font-weight: 700;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
+        }
+        th {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto max-w-5xl p-4 sm:p-6 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900">AuraUy</h1>
+            <p class="text-xl text-gray-600 mt-2">Estado del Proyecto y Plan Q4 2025</p>
+        </header>
+
+        <main>
+            <!-- 1. Resumen Ejecutivo -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-semibold border-b pb-2 mb-4">1. Resumen Ejecutivo</h2>
+                <p class="text-lg leading-relaxed">
+                    <strong>AuraUy</strong> es un asistente de compras por voz para Android, desarrollado en Flutter. Integra tecnologías de <strong>Speech-to-Text (STT)</strong> y <strong>Text-to-Speech (TTS)</strong> remotas, una máquina de estados conversacional y un backend RESTful para gestionar usuarios, catálogo y pedidos. La versión actual ya soporta un flujo completo: desde el registro y onboarding por voz, hasta la búsqueda inteligente de productos, gestión del carrito y confirmación de la compra. La plataforma cuenta con un sistema de observabilidad basado en <strong>Prometheus y Grafana</strong> y una instrumentación de logs estructurados para garantizar la calidad y el monitoreo continuo.
+                </p>
+            </section>
+
+            <!-- 2. Estado Actual -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-semibold border-b pb-2 mb-4">2. Estado Actual (06 de Octubre, 2025)</h2>
+                <p class="mb-4 text-lg">El proyecto ha alcanzado un estado funcional avanzado, con los siguientes hitos completados:</p>
+                <ul class="list-disc list-inside space-y-2 text-lg">
+                    <li><strong>Onboarding por Voz:</strong> Flujo de registro completo con validaciones y confirmaciones en cada paso.</li>
+                    <li><strong>Autenticación:</strong> Sistema JWT robusto con refresh proactivo de tokens y reintentos automáticos.</li>
+                    <li><strong>Catálogo y Búsqueda:</strong> Carga inicial con caché y búsqueda por similitud de texto implementada.</li>
+                    <li><strong>Gestión del Carrito:</strong> Funcionalidades completas para agregar, modificar, eliminar, vaciar y obtener resúmenes.</li>
+                    <li><strong>Detalle de Producto:</strong> Consulta de información detallada desde el catálogo o el carrito.</li>
+                    <li><strong>Checkout:</strong> Flujo de confirmación de compra implementado. La integración con la API `crearPedido` está en progreso.</li>
+                    <li><strong>Experiencia de Voz:</strong> Interacción fluida gracias a STT/TTS remotos con VAD y modelos de escucha adaptativos.</li>
+                    <li><strong>Observabilidad:</strong> Métricas clave enviadas a Prometheus y alertas configuradas en Grafana (en fase de ajuste).</li>
+                </ul>
+            </section>
+
+            <!-- 3. Funcionalidades Implementadas -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-semibold border-b pb-2 mb-6">3. Funcionalidades Implementadas</h2>
+                <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card" style="border-color: #007bff;">
+                        <h3>🗣️ Conversación General</h3>
+                        <p>Capacidades básicas para una interacción fluida y natural.</p>
+                        <ul>
+                            <li><strong>Saludo:</strong> Respuesta contextual según la hora del día y detección de frases de cortesía.</li>
+                            <li><strong>Ayuda:</strong> Asistencia contextualizada según el estado actual del usuario.</li>
+                            <li><strong>Repetir Última Acción:</strong> Reemite la última respuesta TTS.</li>
+                            <li><strong>Salir de la App:</strong> Inicia un flujo de confirmación para cerrar la aplicación.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-color: #28a745;">
+                        <h3>🛒 Carrito y Compras</h3>
+                        <p>El núcleo funcional para la gestión de compras.</p>
+                        <ul>
+                            <li><strong>Búsqueda de Productos:</strong> Búsqueda inteligente por similitud de texto.</li>
+                            <li><strong>Gestión de Carrito:</strong> Permite agregar, modificar cantidades, y eliminar productos.</li>
+                            <li><strong>Resumen y Vaciado:</strong> Funciones para obtener un resumen hablado y vaciarlo.</li>
+                            <li><strong>Detalle de Producto:</strong> Proporciona información detallada como precio e ingredientes.</li>
+                            <li><strong>Realizar Compra:</strong> Inicia el flujo de checkout con un resumen final.</li>
+                        </ul>
+                    </div>
+                    <div class="card lg:col-span-2" style="border-color: #ffc107;">
+                        <h3>👤 Datos de Usuario y Privacidad</h3>
+                        <p>Administración del perfil de usuario mediante comandos de voz.</p>
+                        <ul>
+                            <li><strong>Ver Datos de Usuario:</strong> Ofrece un resumen hablado del perfil.</li>
+                            <li><strong>Modificar Datos:</strong> Flujos guiados para actualizar información personal.</li>
+                            <li><strong>Captura de Email Inteligente:</strong> Permite seleccionar una cuenta del dispositivo o recurrir a un deletreo guiado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Plan de Cierre Q4 2025 -->
+            <section class="mb-12">
+                <h2 class="text-3xl font-semibold border-b pb-2 mb-4">4. Plan de Cierre Q4 2025</h2>
+                 <div class="overflow-x-auto bg-white rounded-lg shadow">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semana</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fechas (UY)</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foco Principal</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tareas Clave</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">1</td>
+                                <td class="px-6 py-4 whitespace-nowrap">06 – 12 de Octubre</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Checkout y UX de Voz</td>
+                                <td class="px-6 py-4 text-sm">Validar `POST /api/pedidos`, ajustar latencia de VAD, y finalizar UX de selección de email.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">2</td>
+                                <td class="px-6 py-4 whitespace-nowrap">13 – 19 de Octubre</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Mejoras en Búsqueda</td>
+                                <td class="px-6 py-4 text-sm">Implementar desambiguación, añadir lectura de alérgenos y mejorar logs.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">3</td>
+                                <td class="px-6 py-4 whitespace-nowrap">20 – 26 de Octubre</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Accesibilidad y Rendimiento</td>
+                                <td class="px-6 py-4 text-sm">Ajustar TTS y UI, implementar caché de catálogo con ETag, y mejorar alertas de Grafana.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">4</td>
+                                <td class="px-6 py-4 whitespace-nowrap">27 Oct. – 02 Nov.</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Robustez y Pruebas</td>
+                                <td class="px-6 py-4 text-sm">Manejo integral de errores, pruebas de estrés y configurar pipeline de CI/CD básico.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">5</td>
+                                <td class="px-6 py-4 whitespace-nowrap">03 – 09 de Noviembre</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Conformidad y Documentación</td>
+                                <td class="px-6 py-4 text-sm">Revisión de conformidad (Decreto 64/020), finalizar `README.md` e integrar video demo.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap font-bold">6</td>
+                                <td class="px-6 py-4 whitespace-nowrap">10 – 16 de Noviembre</td>
+                                <td class="px-6 py-4 whitespace-nowrap font-semibold">Cierre de Proyecto</td>
+                                <td class="px-6 py-4 text-sm">Congelar versión, redactar notas de release, recopilar métricas y planificar mejoras.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. Arquitectura y Flujos -->
+            <section>
+                <h2 class="text-3xl font-semibold border-b pb-2 mb-6">5. Arquitectura y Flujos de Proceso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-lg shadow">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-center">Flujo de Registro de Usuario</h3>
+                        <div class="mermaid-container flex justify-center">
+                            <div class="mermaid">
+                                flowchart TD
+                                  S["Inicio Onboarding"] --> N["Nombre"]
+                                  N --> A["Apellido (con deletreo opcional)"]
+                                  A --> E{"¿Usar cuenta del dispositivo?"}
+                                  E -- "Sí" --> ED["Elegir cuenta detectada"]
+                                  ED --> D["Dirección"]
+                                  E -- "No" --> ES["Captura de email smart<br>deletreo + dominio + TLD"]
+                                  ES --> D
+                                  D --> P["PIN 4 dígitos"]
+                                  P --> F["Frase secreta"]
+                                  F --> R["Registro/Login"]
+                                  R --> C["Catálogo inicial"]
+                                  C --> L["Estado: listo"]
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-center">Arquitectura de Alto Nivel</h3>
+                        <div class="mermaid-container flex justify-center">
+                           <div class="mermaid">
+                                flowchart LR
+                                  U[Usuario] -->|voz| STT[(STT remoto)]
+                                  U -->|escucha| TTS[(TTS)]
+                                  STT --> Voz[VozService]
+                                  TTS --> Voz
+                                  Voz --> Helper[ConversacionHelper + Name/Email Speech]
+                                  Helper --> Model[HomePageModel + ConversacionEstado]
+                                  Model --> Prod[ProductoService]
+                                  Model --> API[AuraCentralApi]
+                                  API -->|/api/*| BE[(Backend REST)]
+                                  Prod --> API
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 py-4 border-t">
+            <p class="text-gray-500">AuraUy Project Plan &copy; 2025</p>
+        </footer>
+
+    </div>
+
+    <!-- Script para renderizar los diagramas de Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+
+
+
